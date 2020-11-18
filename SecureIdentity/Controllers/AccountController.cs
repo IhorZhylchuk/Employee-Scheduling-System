@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SecureIdentity.Models;
 using SecureIdentity.Models.AnnualLeave;
+using SecureIdentity.Models.WorkingShift;
 
 namespace SecureIdentity.Controllers
 {
@@ -166,8 +167,7 @@ namespace SecureIdentity.Controllers
                 annualLeaveCount.AnnualLeaveDays = obj.AnnualLeaveDays;
                 annualLeaveCount.MyIdentityUserId = user.Id;
                 annualLeaveCount.User = user;
-                
-
+              
 
                 IdentityResult result = await userManager.CreateAsync(user, user.NiN.Substring(0,8));
                 if (result.Succeeded)
@@ -186,8 +186,19 @@ namespace SecureIdentity.Controllers
                         ModelState.AddModelError(string.Empty, error.Description);
                     }
                 }
-             
+                WorkingDay workingDay = new WorkingDay();
+                AddingWorkingSheets workingSheets = new AddingWorkingSheets();
+                Days days = new Days();
+
+                for(int m = 1; m <= 12; m++)
+                {
+                    for (int i = 1; i <= days.GetNumberOFDays(m); i++)
+                    {
+                        myIdentityDb.WorkingDays.Add(workingSheets.AddingTable(user,m, i));
+                    }
+                }               
             }
+            await myIdentityDb.SaveChangesAsync();
             return View(obj);
         }
         
@@ -289,19 +300,7 @@ namespace SecureIdentity.Controllers
 
             ViewBag.Users = new SelectList(users.Users, "Users");
 
-            /*
-            //AnnualLeaveCount count = new AnnualLeaveCount();
-            count.User = user;
-            count.AnnualLeaveDays = totalDays;
-            count.AnnualLeaveDays = leaveDays - 1;
-            count.MyIdentityUserId = user.Id;
-            
-    */
-          //  count.AnnualLeaveTotalDays = user.AnnualLeave.AnnualLeaveTotalDays;
-           // count.AnnualLeaveDays = user.AnnualLeave.AnnualLeaveDays - 1;
-          //  count.Id = user.AnnualLeave.Id;
-            //count.AnnualLeaveTotalDays = totalDays;
-            //count.AnnualLeaveDays = day.GetDay(myIdentityDb.Users.Where(id => id.Id == user.Id).Select(leave => leave.AnnualLeave.AnnualLeaveDays)) - 1;
+     
             var queryLeave = new AnnualLeaveViewModel();
            // queryLeave.Annual = viewModel.Annual;
             queryLeave.Comment = viewModel.Comment;

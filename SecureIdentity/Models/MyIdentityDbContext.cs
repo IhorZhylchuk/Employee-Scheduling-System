@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SecureIdentity.Models.AnnualLeave;
+using SecureIdentity.Models.WorkingShift;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace SecureIdentity.Models
     {
         public DbSet<AnnualLeaveCount> AnnualLeaves { get; set; }
         public DbSet<AnnualLeaveViewModel> AnnualLeaveViews { get; set; }
+        public DbSet<WorkingDay> WorkingDays { get; set; }
         public MyIdentityDbContext(DbContextOptions<MyIdentityDbContext> options) : base(options)
         {
             Database.EnsureCreated();

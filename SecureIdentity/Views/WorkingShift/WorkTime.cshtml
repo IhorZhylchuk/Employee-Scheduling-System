@@ -1,0 +1,171 @@
+﻿@using System.Globalization
+
+
+@model SecureIdentity.Models.WorkingShift.MonthWorkingModel
+@{
+    ViewData["Title"] = "WorkTime";
+
+    int[] months = Enumerable.Range(1, 12).ToArray();
+ 
+    int curMonth = Model.WorkingDays.FirstOrDefault().Month;
+
+}
+
+<form asp-controller="WorkingShift" asp-action="WorkTime" method="post" style="width:100%">
+    <table class="table-bordered  table-dark table" style="width:100%">
+        <tr>
+            <td><label asp-for="@DateTime.Now.Year"></label></td>
+            <td>
+                <input type="text" value="@DateTime.Now.Year" />
+            </td>
+            <td><label asp-for="@curMonth"></label></td>
+            <td>
+                <select>
+                    @for (int i = 1; i <= 12; i++)
+                    {
+
+                        var date = new DateTime(DateTime.Now.Year, i, 1);
+                        if (i == DateTime.Now.Month)
+                        {
+                            <option selected>@date.ToString("MMMM", CultureInfo.InvariantCulture)</option>
+                        }
+                        else if (i != DateTime.Now.Month)
+                        {
+                            <option>@date.ToString("MMMM", CultureInfo.InvariantCulture)</option>
+                        }
+
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+               <a id="button" onclick="getNextMonth()" class="btn btn-primary" style="margin-left: 5%">Next</a>
+            </td>
+        </tr>
+    </table>
+    <table class=" table-bordered table-responsive table" style="margin-top: 10px; width:100%">
+        <tr>
+            <th></th>
+            @for (int d = 0; d < Model.WorkingDays.Count; d++)
+            {
+                <th style="text-align:center">
+                    @Model.WorkingDays[d].Day
+                    <input hidden asp-for="@Model.WorkingDays[d].Day" value="@Model.WorkingDays[d].Day" />
+                    <input hidden asp-for="@Model.WorkingDays[d].User" value="@Model.WorkingDays[d].User" />
+                    <input hidden asp-for="@Model.WorkingDays[d].Id" value="@Model.WorkingDays[d].Id" />
+                    <input hidden asp-for="@Model.WorkingDays[d].DateTime" value="@Model.WorkingDays[d].DateTime" />
+                    <input hidden asp-for="@Model.WorkingDays[d].Month" value="@Model.WorkingDays[d].Month" />
+                    <input hidden asp-for="@Model.WorkingDays[d].Year" value="@Model.WorkingDays[d].Year" />
+                </th>
+            }
+
+        </tr>
+        <tr>
+            <th class="col-md-5" style="width: 100px">Nominal Working Hours</th>
+
+            @for (int d = 0; d < Model.WorkingDays.Count; d++)
+            {
+                <th class="col-md-1" style="width: 30px;height:30px; text-align:center">
+                    @Model.WorkingDays[d].NominalWorkingHours
+                    <input hidden asp-for="@Model.WorkingDays[d].NominalWorkingHours" style="width:40px;border:none" type="text" value="@Model.WorkingDays[d].NominalWorkingHours" />
+
+                </th>
+            }
+
+        </tr>
+        <tr>
+            <th class="col-md-5" style="width: 100px">Actual Working Hours</th>
+
+            @for (int d = 0; d < Model.WorkingDays.Count; d++)
+            {
+                <th class="col-md-1" style="width: 30px;height:30px; text-align:center">
+
+                    <input asp-for="@Model.WorkingDays[d].ActualWorkingHours" style="width:40px;border:none; text-align:center" type="text" value="@Model.WorkingDays[d].ActualWorkingHours" />
+
+                </th>
+            }
+
+        </tr>
+        <tr>
+            <th class="col-md-5" style="width: 100px">Hours Over Paid 50%</th>
+            @for (int d = 0; d < Model.WorkingDays.Count; d++)
+            {
+                <th class="col-md-1" style="width: 30px;height:30px">
+                    <input asp-for="@Model.WorkingDays[d].HoursOverPaid50" type="text" style="width:40px;border:none;text-align:center" value="@Model.WorkingDays[d].HoursOverPaid50" />
+                </th>
+
+            }
+        </tr>
+        <tr>
+            <th class="col-md-5" style="width: 100px">Hours Over Paid 100%</th>
+            @for (int d = 0; d < Model.WorkingDays.Count; d++)
+            {
+                <th class="col-md-1" style="width: 30px;height:30px">
+                    <input asp-for="@Model.WorkingDays[d].HoursOverPaid100" type="text" style="width:40px;border:none;text-align:center" value="@Model.WorkingDays[d].HoursOverPaid100" />
+                </th>
+
+            }
+        </tr>
+    </table>
+    <table style="margin-top: 10px; width: 100%">
+        <tr>
+            <td colspan="2">
+                <button type="submit"
+                        class="btn btn-primary">
+                    Save
+                </button>
+            </td>
+            <td colspan="2">
+                <a asp-controller="Account" asp-action="Index" class="btn btn-primary" style="margin-left: 5%">Back</a>
+            </td>
+        </tr>
+    </table>
+    <table class="table-responsive" style="margin-top: 10px">
+        <tr>
+            <th>
+                <p>Nominal working days: @ViewBag.NominalWD</p>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <p>Nominal working hours: @ViewBag.NominalWH</p>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <p> Actual working hours: @ViewBag.ActualWH</p>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <p>Hours overpaid 50%: @ViewBag.HOverpaid50</p>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <p>Hours overpaid 100%: @ViewBag.HOverpaid100</p>
+            </th>
+        </tr>
+
+    </table>
+</form>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    function getNextMonth() {
+        var elem = document.getElementById('button').value;
+        $.ajax({
+            type: "GET",
+            url: "https://localhost:44373/WorkingShift/WorkTime?id=a536bbbd-7e9d-408b-9f50-26e92e7adf3d",
+            data: { data1: elem },
+            success: function (responsedata) {
+                // process on data
+                alert("got response as " + "'" + responsedata + "'");
+                }
+            })
+    }
+
+</script>
+
+
+

@@ -22,7 +22,6 @@ namespace SecureIdentity.Models
         public int WeekDays(DateTime date_start, DateTime date_end)
         {
             var dates = new List<DateTime>();
-            
             for (var day = date_start; day <= date_end; day = day.AddDays(1)){ 
                 if (day.DayOfWeek != DayOfWeek.Sunday && day.DayOfWeek != DayOfWeek.Saturday)
                 {

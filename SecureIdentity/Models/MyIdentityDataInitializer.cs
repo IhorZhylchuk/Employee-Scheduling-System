@@ -14,7 +14,6 @@ namespace SecureIdentity.Models
         {
             SeedRoles(roleManager);
             SeedUsers(userManager);
-
         }
         public static void SeedRoles(RoleManager<MyIdentityRole> roleManager)
         {
@@ -22,7 +21,7 @@ namespace SecureIdentity.Models
             {
                 MyIdentityRole role = new MyIdentityRole();
                 role.Name = "User";
-                //role.Description = "Perform normal operations";
+
                 IdentityResult result = roleManager.CreateAsync(role).Result;
 
             }
@@ -30,7 +29,7 @@ namespace SecureIdentity.Models
             {
                 MyIdentityRole role = new MyIdentityRole();
                 role.Name = "Administrator";
-                //role.Description = "Perform all the operations.";
+
                 IdentityResult roleResult = roleManager.CreateAsync(role).Result;
 
             }
@@ -47,15 +46,12 @@ namespace SecureIdentity.Models
                 user.DateOfBirth = new DateTime(1991, 2, 28);
                 user.Role = "User";
 
-                
-
 
                 IdentityResult result = userManager.CreateAsync(user, "Qwerty12345!").Result;
                 if (result.Succeeded)
                 {
                     userManager.AddToRoleAsync(user, "User").Wait();
                     
-                   // user.Role = userManager.GetRolesAsync(user).ToString();
                 }
                 if(userManager.FindByNameAsync("Administrator").Result == null)
                 {
@@ -71,7 +67,6 @@ namespace SecureIdentity.Models
                     {
                         userManager.AddToRoleAsync(user2, "Administrator").Wait();
                         
-                        //user2.Role = userManager.GetRolesAsync(user).ToString();
                     }
                 }
             }

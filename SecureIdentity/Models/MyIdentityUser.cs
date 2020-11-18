@@ -13,12 +13,7 @@ namespace SecureIdentity.Models
         public string FullName { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string Role { get; set; }
-        //public string ConfirmPassword { get; set; }
-
-        //public string SearchUser { get; set; }
         public string NiN { get; set; }
-        //public AnnualLeaveCount AnnualLeave { get; set; }
-        // public int AnnualLeaveCountId { get; set; }
         public int AnnualTotalDays { get; set; }
         public int AnnualLeaveDays { get; set; }
     }

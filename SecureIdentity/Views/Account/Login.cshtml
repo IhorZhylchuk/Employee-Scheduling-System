@@ -4,29 +4,27 @@
     Layout = "_LayoutLogin";
 }
 
-    <form asp-controller="Account" asp-action="Login" method="post" asp-route-returnUrl="@Model.ReturnUrl">
-        <div asp-validation-summary="ModelOnly"></div>
+    <form asp-controller="Account" asp-action="Login" method="post" asp-route-returnUrl="@Model.ReturnUrl" style="width:100%">
+        <div class="input-group" style="width:50%; margin-left:25%">
+            <div asp-validation-summary="ModelOnly"></div>
 
-        <div class="input-group" style="margin-top:50px">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            <input asp-for="UserName" placeholder="User name" class="input-group">
+            <div class="input-group" style="margin-top:25%">
+                <span class="input-group-addon" style="height:45px"><i class="glyphicon glyphicon-user"></i></span>
+                <input asp-for="UserName" placeholder="User name" class="input-group" style="height:45px">
 
+            </div>
+
+            <div class="input-group" style="margin-top:5px">
+                <span class="input-group-addon" style="height:45px"><i class="glyphicon glyphicon-lock"></i></span>
+                <input type="password" asp-for="Password" placeholder="Password" class="input-group" style="height:45px">
+
+            </div>
+            <br />
+            <div class="input-group">
+                <input type="submit"
+                       value="Login" />
+            </div>
+            <div asp-validation-summary="All"></div>
         </div>
-        
-        <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-            <input type="password" asp-for="Password" placeholder="Password" class="input-group">
-
-        </div>
-        <br />
-        <div class="input-group">
-            <input type="submit"
-                   value="Login" />
-        </div>
-        
-
-
-
-        <div asp-validation-summary="All"></div>
     </form>
 

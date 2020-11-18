@@ -30,7 +30,6 @@ namespace SecureIdentity
             //services.AddMvc(options => options.EnableEndpointRouting = false);
             services.AddDbContext<MyIdentityDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             IdentityBuilder identityBuilder = services.AddIdentity<MyIdentityUser, MyIdentityRole>().AddEntityFrameworkStores<MyIdentityDbContext>().AddDefaultTokenProviders();
-           
             services.Configure<IdentityOptions>(options => {
                 options.Password.RequiredLength = 8;
                 options.Password.RequireDigit = false;
@@ -38,7 +37,6 @@ namespace SecureIdentity
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;            
             });
-           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
