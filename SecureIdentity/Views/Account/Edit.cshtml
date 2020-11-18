@@ -1,0 +1,95 @@
+﻿@using SecureIdentity.Models;
+@using Microsoft.AspNetCore.Mvc.Rendering;
+@using Microsoft.AspNetCore.Identity;
+
+
+@model EditViewModel
+
+@{
+
+}
+
+
+<h1>Edit</h1>
+<form asp-controller="Account" asp-action="Edit" method="post" asp-for-id="@Model.Id">
+    <table>
+        <tr>
+            <td><label asp-for="UserName" hidden></label></td>
+            <td><input asp-for="UserName"hidden/></td>
+        </tr>
+        <tr>
+            <td><label asp-for="FullName"></label></td>
+            <td><input asp-for="FullName" /></td>
+        </tr>
+        <tr>
+            <td><label asp-for="Email"></label></td>
+            <td><input asp-for="Email" /></td>
+        </tr>
+        <tr>
+            <td><label asp-for="BirthDate"></label></td>
+            <td><input asp-for="BirthDate" /></td>
+
+            <td>
+                <label asp-for="Role"></label>
+                <select asp-for="Role">
+                    <option>--Select--</option>
+                    <option>Administrator</option>
+                    <option>User</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit"
+                        class="btn btn-primary">
+                    Edit
+                </button>
+            </td>
+            <td colspan="2">
+                <a asp-action="Index" class="btn btn-primary">Back</a>
+            </td>
+        </tr>
+    </table>
+    <div asp-validation-summary="All"></div>
+</form>
+
+<div class="modal fade" id="aModal" tabindex="-1" role="dialog" aria-labelledby="aModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                @ViewBag.Result
+            </div>
+            <div class="modal-footer">
+                <a asp-controller="Account" asp-action="Index">Ok</a>
+            </div>
+        </div>
+    </div>
+</div>
+@{
+    if (ViewBag.Result != null)
+    {
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                $("#aModal").modal('show');
+            });
+        </script>
+    }
+}
+@section Scripts{
+    <script>
+        $(document).keypress(function (event) {
+
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode == '13') {
+
+                window.location.href = "https://localhost:44373/Account/Register";
+            }
+
+        });
+    </script>
+}
+

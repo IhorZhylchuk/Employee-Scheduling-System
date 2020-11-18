@@ -1,0 +1,19 @@
+﻿@model MyIdentityUser
+@{
+    ViewBag.User = Model.FullName;
+}
+
+<h1>Пользователь @ViewBag.User</h1>
+<div>
+    <dl class="dl-horizontal">
+        <dt>Идентификатор</dt>
+        <dd>@Model.Id</dd>
+        <dt>Email</dt>
+        <dd>@Model.Email</dd>
+        <dt>Возраст</dt>
+        <dd>@Model.DateOfBirth</dd>
+        <dt>Роль</dt>
+        <dd>@Model.Role</dd>
+    </dl>
+</div>
+

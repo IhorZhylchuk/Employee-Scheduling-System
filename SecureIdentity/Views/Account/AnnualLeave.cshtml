@@ -1,0 +1,50 @@
+﻿@model AnnualLeaveViewModel
+@{
+    ViewData["Title"] = "AnnualLeave";
+
+}
+
+<h1>AnnualLeave for @ViewBag.UserName</h1>
+<h2>@ViewBag.Annual days you have</h2>
+
+
+<form asp-controller="Account" asp-action="AnnualLeave"  method="post">
+    <table>
+        <tr>
+            <td><label asp-for="FromDate"></label></td>
+            <td><input asp-for="FromDate" /></td>
+        </tr>
+        <tr>
+            <td><label asp-for="ToDate"></label></td>
+            <td><input asp-for="ToDate" /></td>
+      
+        </tr>
+        <tr>
+            <td>
+                <select asp-for="Id" asp-items="@ViewBag.Users" class="form-control">
+                    <option selected="selected">Choose user</option>
+                </select>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label asp-for="Comment">Comment:</label>
+                <textarea asp-for="Comment" class="form-control" rows="4" id="Comment" ></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit"
+                        class="btn btn-primary">
+                    Send
+                </button>
+            </td>
+            <td colspan="2">
+                <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Back</a>
+            </td>
+        </tr>
+    </table>
+   
+</form>
+
